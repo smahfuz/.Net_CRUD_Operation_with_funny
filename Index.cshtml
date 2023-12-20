@@ -1,0 +1,23 @@
+﻿@model IEnumerable<SimpleBlog.Models.Domain.BlogInfo>
+@{
+}
+<h2>Index Bismillah, BLog</h2>
+
+
+    @foreach(var i in Model){
+<div>
+    <h3>@i.Title</h3>
+
+    <img width="500px" src="@i.ImgUrl" />
+
+    <p>@i.Body
+    </p>
+
+        <a href="Blog/Edit/@i.Id"><button class="btn btn-light">Edit </button></a>
+            / <a href="Blog/Delete/@i.Id"><button class="btn btn-danger" >Delete</button></a>
+</div>
+
+        <br />
+        <hr />
+    }
+
