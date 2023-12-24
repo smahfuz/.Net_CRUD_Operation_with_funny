@@ -7,16 +7,16 @@ namespace SimpleBlog.Controllers
 {
     public class BlogController : Controller
     {
-        private readonly BlogDbContext mut;
+        private readonly BlogDbContext m;
 
-        public BlogController(BlogDbContext gu)
+        public BlogController(BlogDbContext g)
         {
-            mut = gu;
+            m = gu;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<BlogInfo> blogs = mut.Blogs.ToList();
+            IEnumerable<BlogInfo> blogs = m.Blogs.ToList();
 
             return View(blogs);
         }
@@ -37,21 +37,21 @@ namespace SimpleBlog.Controllers
             bloggo.Title = t;
             bloggo.Body = b;    
             bloggo.ImgUrl = iu;
-            mut.Add(bloggo);
-            mut.SaveChanges();
+            m.Add(bloggo);
+            m.SaveChanges();
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            BlogInfo blog = mut.Blogs.FirstOrDefault(b => b.Id == id);
+            BlogInfo blog = m.Blogs.FirstOrDefault(b => b.Id == id);
             if (blog == null) { return RedirectToAction("Index"); }
             return View(blog);
         }
 
         public IActionResult Edit(BlogInfo blog) {
-            BlogInfo bloggo = mut.Blogs.Find(blog.Id);
+            BlogInfo bloggo = m.Blogs.Find(blog.Id);
             if (bloggo == null)
             {
                 return RedirectToAction("Index");
@@ -60,14 +60,14 @@ namespace SimpleBlog.Controllers
             bloggo.Title = blog.Title;
             bloggo.Body = blog.Body;
             bloggo.ImgUrl=blog.ImgUrl;
-            mut.SaveChanges();
+            m.SaveChanges();
             return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)
         {
             BlogInfo bloggo = mut.Blogs.Find(id);
             if(bloggo == null) { return RedirectToAction("Index"); }
-            mut.Blogs.Remove(bloggo); mut.SaveChanges();
+            m.Blogs.Remove(bloggo); mut.SaveChanges();
             return RedirectToAction("Index");
         }
     }
