@@ -11,7 +11,7 @@ namespace SimpleBlog.Controllers
 
         public BlogController(BlogDbContext g)
         {
-            m = gu;
+            m = g;
         }
 
         public IActionResult Index()
@@ -65,9 +65,9 @@ namespace SimpleBlog.Controllers
         }
         public IActionResult Delete(int id)
         {
-            BlogInfo bloggo = mut.Blogs.Find(id);
+            BlogInfo bloggo = m.Blogs.Find(id);
             if(bloggo == null) { return RedirectToAction("Index"); }
-            m.Blogs.Remove(bloggo); mut.SaveChanges();
+            m.Blogs.Remove(bloggo); m.SaveChanges();
             return RedirectToAction("Index");
         }
     }
